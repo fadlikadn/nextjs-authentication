@@ -16,10 +16,16 @@ const RegisterForm = () => {
     email: "",
     password: "",
   })
+  const [error, setError] = useState("")
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setFormValues({
+      name: "",
+      email: "",
+      password: "",
+    })
 
     try {
       const res = await fetch("/api/register", {
@@ -32,7 +38,7 @@ const RegisterForm = () => {
 
       setLoading(false)
       if (!res.ok) {
-        alert((await res.json()).message)
+        setError((await res.json()).message)
         return
       }
 
@@ -40,7 +46,7 @@ const RegisterForm = () => {
     } catch (error: any) {
       setLoading(false)
       console.error(error)
-      alert(error.message)
+      setError(error.message)
     }
   }
 
@@ -49,53 +55,56 @@ const RegisterForm = () => {
     setFormValues({ ...formValues, [name]: value })
   }
 
+  const inputStyle = "form-control block w-full px-4 py-5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+
   return (
     <form
       onSubmit={onSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: 500,
-        rowGap: 10,
-      }}
     >
-      <label htmlFor="name">Name</label>
-      <input
-        required
-        type="text"
-        name="name"
-        value={formValues.name}
-        onChange={handleChange}
-        style={{ padding: "1rem" }}
-      />
-      <label htmlFor="email">Email</label>
-      <input
-        required
-        type="email"
-        name="email"
-        value={formValues.email}
-        onChange={handleChange}
-        style={{ padding: "1rem" }}
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        required
-        type="password"
-        name="password"
-        value={formValues.password}
-        onChange={handleChange}
-        style={{ padding: "1rem" }}
-      />
+      {error && (
+        <p className="text-center bg-red-300 py-4 mb-6 rounded">{error}</p>
+      )}
+      <div className="mb-6">
+        <input
+          required
+          type="text"
+          name="name"
+          value={formValues.name}
+          onChange={handleChange}
+          placeholder="Name"
+          className={inputStyle}
+        />
+      </div>
+      <div className="mb-6">
+        <input
+          required
+          type="email"
+          name="email"
+          value={formValues.email}
+          onChange={handleChange}
+          placeholder="Email address"
+          className={inputStyle}
+        />
+      </div>
+      <div className="mb-6">
+        <input
+          required
+          type="password"
+          name="password"
+          value={formValues.password}
+          onChange={handleChange}
+          placeholder="Password"
+          className={inputStyle}
+        />
+      </div>
       <button
         style={{
           backgroundColor: `${loading ? "#ccc" : "#3446eb"}`,
-          color: "#fff",
-          padding: "1rem",
-          cursor: "pointer",
         }}
+        className="inline-block px-7 py-4 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
         disabled={loading}
       >
-        {loading ? "loading..." : "Register"}
+        {loading ? "loading..." : "Sign Up"}
       </button>
     </form>
   )

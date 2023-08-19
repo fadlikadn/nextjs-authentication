@@ -38,3 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Run Docker Compose: `docker-compose up -d`
 - Create migration file: `npx prisma migrate dev --name init`
 - Add data to database: `npx prisma db seed`
+- Apply Prisma migrations: `yarn prisma db push`
