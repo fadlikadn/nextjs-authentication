@@ -1,4 +1,4 @@
-import { LoginButton, LogoutButton, ProfileButton, RegisterButton } from "@/components/buttons.component"
+import { LoginButton, LogoutButton, ProfileButton, ProfileServerButton, RegisterButton } from "@/components/buttons.component"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { User } from "@/components/user.component"
@@ -19,6 +19,7 @@ const Home = async () => {
         <RegisterButton />
         <LogoutButton />
         <ProfileButton />
+        <ProfileServerButton />
 
         <h1>Server Session</h1>
         <pre>{JSON.stringify(session)}</pre>
