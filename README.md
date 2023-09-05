@@ -39,3 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Create migration file: `npx prisma migrate dev --name init`
 - Add data to database: `npx prisma db seed`
 - Apply Prisma migrations: `yarn prisma db push`
+
+## Resources
+- https://codevoweb.com/nextjs/
